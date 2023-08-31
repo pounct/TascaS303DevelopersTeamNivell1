@@ -2,6 +2,7 @@ package nivell1;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import entitats.Arbre;
 import entitats.Compra;
@@ -36,7 +37,7 @@ public class FloristeriaGestion {
 	private ArrayList<Venda> vendes = new ArrayList<>();
 	private ArrayList<LiniaCompra> liniesCompres = new ArrayList<>();
 	private ArrayList<LiniaVenda> liniesVendes = new ArrayList<>();
-	//////
+	// gestion Indexacio
 	private ArrayList<Indexacio> indexacions = new ArrayList<>();
 	//////
 
@@ -47,8 +48,9 @@ public class FloristeriaGestion {
 	// Crear Floristeria.
 	public void crearFloristeria(String nom) {
 
-		// initialtzar Indexacio
+		// Crear i initialtzar Indexacio
 		indexacio = new Indexacio(0, 0, 0, 0, 0, 0);
+		indexacions.add(indexacio);
 		// Crear Floristeria.
 		floristeria = new Floristeria();
 		floristeria.setId(indexacio.getIndex(floristeria));
@@ -58,6 +60,7 @@ public class FloristeriaGestion {
 		entitatsData.crearDirectoriFloristeria(floristeria);
 		System.out.println("guardar la floristeria a la base de dades...");
 		entitatsData.saveFloristeries(floristeries);
+		entitatsData.saveIndexacions(indexacions);
 		System.out.println("floristeria guardada.");
 	}
 
@@ -94,6 +97,7 @@ public class FloristeriaGestion {
 		liniaCompra.setPreu(preu);
 		this.liniesCompres.add(liniaCompra);
 		// Guardar entitats
+		entitatsData.saveIndexacions(indexacions);
 		entitatsData.saveArbres(arbres);
 		entitatsData.saveCompres(compres);
 		entitatsData.saveLiniesCompres(liniesCompres);
@@ -133,6 +137,7 @@ public class FloristeriaGestion {
 		liniaCompra.setPreu(preu);
 		this.liniesCompres.add(liniaCompra);
 		// Guardar entitats
+		entitatsData.saveIndexacions(indexacions);
 		entitatsData.saveFlors(flors);
 		entitatsData.saveCompres(compres);
 		entitatsData.saveLiniesCompres(liniesCompres);
@@ -172,15 +177,35 @@ public class FloristeriaGestion {
 		liniaCompra.setPreu(preu);
 		this.liniesCompres.add(liniaCompra);
 		// Guardar entitats
+		entitatsData.saveIndexacions(indexacions);
 		entitatsData.saveDecoracions(decoracions);
 		entitatsData.saveCompres(compres);
 		entitatsData.saveLiniesCompres(liniesCompres);
 		entitatsData.saveProductes(productes);
 	}
+
+	
 	
 	// Stock
 
-	
+	public void imprimirStock() {
+		// productes en stock = liniesCompres - liniesVendes
+		Iterator<LiniaCompra> it = liniesCompres.iterator(); 
+		ArrayList<Integer> productesIds = new ArrayList<>();
+		// productes en stock by id
+		while(it.hasNext()) {
+			LiniaCompra lc = it.next();
+			boolean vemdido=false;
+			for(LiniaVenda lv:liniesVendes) {
+				if (lv.getProducteId()==lc.getProducteId()) {
+					vemdido=true;
+				}
+			}
+			if (!vemdido) productesIds.add(lc.getProducteId());			
+		}
+		productesIds.forEach(null);
+		
+	}
 
 	
 	/////////////////   fin  funcionalitats.

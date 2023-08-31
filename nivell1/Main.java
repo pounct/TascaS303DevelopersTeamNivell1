@@ -65,7 +65,7 @@ public class Main {
 				// Stock: Imprimeix per pantalla tots els arbres, flors i decoració 
 				// que té la floristeria.
 				// 5.Stock
-				imprimirStock(null);// stock.getProductes()
+				imprimirStock();// stock.getProductes()
 				break;
 			case 6:
 				// 6.Retirar arbre.
@@ -134,6 +134,11 @@ public class Main {
 				break;
 			}
 		}
+	}
+
+	public static void imprimirStock() {
+		floristeriaGestion.imprimirStock();
+		
 	}
 
 	public static void menuPrincipal() {
@@ -222,11 +227,6 @@ public class Main {
 	}
 
 	private static void retirarArbre() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void imprimirStock(List<Producte> productes) {
 		// TODO Auto-generated method stub
 
 	}
