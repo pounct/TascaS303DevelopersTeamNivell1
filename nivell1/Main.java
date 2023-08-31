@@ -137,8 +137,14 @@ public class Main {
 	}
 
 	public static void imprimirStock() {
-		floristeriaGestion.imprimirStock();
-		
+		floristeriaGestion.calcularStock();
+		System.out.println("Stock : ");
+		System.out.println("Arbres : ");
+		System.out.println(floristeriaGestion.getstock().getArbres());
+		System.out.println("flors : ");	
+		System.out.println(floristeriaGestion.getstock().getFlors());
+		System.out.println("Decoracions");
+		System.out.println(floristeriaGestion.getstock().getDecoracions());
 	}
 
 	public static void menuPrincipal() {

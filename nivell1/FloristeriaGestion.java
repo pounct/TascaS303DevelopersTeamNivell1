@@ -184,30 +184,63 @@ public class FloristeriaGestion {
 		entitatsData.saveProductes(productes);
 	}
 
-	
-	
 	// Stock
 
-	public void imprimirStock() {
+	public void calcularStock() {
+		// inicialitzar entitats
+		liniesCompres = entitatsData.getLiniesCompres();
+		liniesVendes = entitatsData.getLiniesVendes();
+		productes = entitatsData.getProductes();
+		arbres = entitatsData.getArbres();
+		flors = entitatsData.getFlors();
+		decoracions = entitatsData.getDecoracions();
+		// ini stock
+		stock = new Stock();
 		// productes en stock = liniesCompres - liniesVendes
-		Iterator<LiniaCompra> it = liniesCompres.iterator(); 
+		Iterator<LiniaCompra> it = liniesCompres.iterator();
 		ArrayList<Integer> productesIds = new ArrayList<>();
 		// productes en stock by id
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			LiniaCompra lc = it.next();
-			boolean vemdido=false;
-			for(LiniaVenda lv:liniesVendes) {
-				if (lv.getProducteId()==lc.getProducteId()) {
-					vemdido=true;
+			boolean vemdido = false;
+			for (LiniaVenda lv : liniesVendes) {
+				if (lv.getProducteId() == lc.getProducteId()) {
+					vemdido = true;
 				}
 			}
-			if (!vemdido) productesIds.add(lc.getProducteId());			
+			if (!vemdido)
+				productesIds.add(lc.getProducteId());
 		}
-		productesIds.forEach(null);
+		productes.forEach(producte -> {
+			if (productesIds.contains(producte.getId())) {
+				stock.addProducte(producte);
+			}
+		});
 		
+		arbres.forEach(arbre -> {
+			if (productesIds.contains(arbre.getId())) {
+				stock.addArbre(arbre);
+			}
+		});
+		
+		flors.forEach(flor -> {
+			if (productesIds.contains(flor.getId())) {
+				stock.addFlor(flor);
+			}
+		});
+		
+		decoracions.forEach(decoracio -> {
+			if (productesIds.contains(decoracio.getId())) {
+				stock.addDecoracio(decoracio);
+			}
+		});
+
 	}
 
-	
-	/////////////////   fin  funcionalitats.
+	public Stock getstock() {
+		return stock;
+	}
+
+	///////////////// fin funcionalitats.
 
 }
