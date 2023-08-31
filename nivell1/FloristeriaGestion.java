@@ -2,8 +2,6 @@ package nivell1;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 import entitats.Arbre;
 import entitats.Compra;
