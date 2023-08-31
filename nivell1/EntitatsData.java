@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import entitats.Arbre;
 import entitats.Compra;
 import entitats.Decoracio;
-import entitats.Entitat;
 import entitats.Flor;
 import entitats.Floristeria;
 import entitats.Indexacio;
@@ -15,11 +14,6 @@ import entitats.Producte;
 import entitats.Venda;
 
 public class EntitatsData {
-
-	private Floristeria floristeria;
-	private String pathFloristeriaDB = "data_txt\\" + floristeria.getNom() + "db\\";
-	private FloristeriaGestion floristeriaGestion;
-	// private Percistencia percistencia;
 
 	private ArrayList<Arbre> arbres;
 	private ArrayList<Compra> compres;
@@ -31,8 +25,12 @@ public class EntitatsData {
 	private ArrayList<LiniaVenda> liniesVendes;
 	private ArrayList<Producte> productes;
 	private ArrayList<Venda> vendes;
+	
+	private Floristeria floristeria;
+	private String pathFloristeriaDB = "data_txt\\" + floristeria.getNom() + "db\\";
+	private String path; // to fitxer
 
-	String path;
+	
 
 	public EntitatsData() {
 	}
@@ -83,7 +81,7 @@ public class EntitatsData {
 		Persistencia.saveLines(compresToLinies(compres), path);
 	}
 
-	private ArrayList<String> compresToLinies(ArrayList<Compra> compres) {
+	public ArrayList<String> compresToLinies(ArrayList<Compra> compres) {
 		ArrayList<String> linies = new ArrayList<>();
 		compres.forEach(compra -> linies.add(compra.toString()));
 		return linies;
@@ -97,7 +95,7 @@ public class EntitatsData {
 		return decoracions;
 	}
 
-	private ArrayList<Decoracio> liniesToDecoracions(ArrayList<String> linies) {
+	public ArrayList<Decoracio> liniesToDecoracions(ArrayList<String> linies) {
 		Decoracio decoracio = new Decoracio();
 		ArrayList<Decoracio> decoracions = new ArrayList<>();
 		linies.forEach(linia -> decoracions.add(decoracio.fromString(linia)));
@@ -155,7 +153,7 @@ public class EntitatsData {
 //	floristeries Floristeria
 
 	public ArrayList<Floristeria> getFloristeries() {
-		path = pathFloristeriaDB + "Floristeria" + "Data.txt";
+		path = "data_txt\\" + "Floristeria" + "Data.txt";
 		floristeries = liniesToFloristeries(Persistencia.getLinies(path));
 		return floristeries;
 	}
@@ -169,7 +167,7 @@ public class EntitatsData {
 	}
 
 	public void saveFloristeries(ArrayList<Floristeria> floristeries) {
-		path = pathFloristeriaDB + "Floristeria" + "Data.txt";
+		path = "data_txt\\" + "Floristeria" + "Data.txt";
 		Persistencia.saveLines(floristeriesToLinies(floristeries), path);
 
 	}
@@ -309,6 +307,11 @@ public class EntitatsData {
 		ArrayList<String> linies = new ArrayList<>();
 		vendes.forEach(venda -> linies.add(venda.toString()));
 		return linies;
+	}
+
+	public void crearDirectoriFloristeria(Floristeria floristeria) {
+		setFloristeria(floristeria);		
+		ServeisData.crearDirectori(pathFloristeriaDB);		
 	}
 
 }

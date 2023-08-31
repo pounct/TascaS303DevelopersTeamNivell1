@@ -15,18 +15,17 @@ public class Main {
 	static Floristeria floristeria;
 	static FloristeriaGestion floristeriaGestion;
 	static Indexacio indexacio;
-	
 
 	public static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		
+
 		floristeriaGestion = new FloristeriaGestion();
-		
+
 		boolean onProgram = true;
-		
+
 		Byte opcion;
-		
+
 		while (onProgram) {
 			menuPrincipal();
 			opcion = sc.nextByte();
@@ -34,27 +33,23 @@ public class Main {
 			switch (opcion) {
 			case 1:
 				// 1.Crear Floristeria.
-				// initialtzar Indexacio
-				indexacio = new Indexacio(0, 0, 0, 0, 0, 0);
-				crearFloristeria(indexacio);
+				crearFloristeria();
 				break;
 			case 2:
 				// 2.Afegir Arbre.
 				if (indexacio != null) {
-					floristeriaGestion.afegirArbre(indexacio,sc);
+					afegirArbre();
 				} else {
 					System.out.println(" no hi ha floristeria!!!");
 				}
-
 				break;
 			case 3:
 				// 3.Afegir Flor.
 				if (indexacio != null) {
-					afegirFlor(indexacio);
+					afegirFlor();
 				} else {
 					System.out.println(" no hi ha floristeria!!!");
 				}
-				
 
 				break;
 			case 4:
@@ -67,10 +62,10 @@ public class Main {
 
 				break;
 			case 5:
-				// Stock: Imprimeix per pantalla tots els arbres, flors i decoració que té la
-				// floristeria.
+				// Stock: Imprimeix per pantalla tots els arbres, flors i decoració 
+				// que té la floristeria.
 				// 5.Stock
-				imprimirStock(null);//stock.getProductes()
+				imprimirStock(null);// stock.getProductes()
 				break;
 			case 6:
 				// 6.Retirar arbre.
@@ -90,7 +85,7 @@ public class Main {
 			case 9:
 				// Printar per pantalla stock amb quantitats.
 				// 9.Stock Amb Quantitats
-				imprimirStockQuantitats(null);//Stock.getProductes()
+				imprimirStockQuantitats(null);// Stock.getProductes()
 
 				break;
 			case 10:
@@ -138,11 +133,11 @@ public class Main {
 			default:
 				break;
 			}
-		}		
+		}
 	}
-	
+
 	public static void menuPrincipal() {
-		System.out.println(" Floristeria:"+((floristeria!=null)? floristeria.getNom():""));
+		System.out.println(" Floristeria:" + ((floristeria != null) ? floristeria.getNom() : ""));
 		System.out.println("\n\n");
 		System.out.println(" 1.Crear Floristeria."); // obrir floristeria
 		System.out.println(" 14.Obrir Floristeria.");
@@ -160,40 +155,41 @@ public class Main {
 		System.out.println(" 13.diners guanyats");
 		System.out.println(" 0.fin");
 	}
-	
-	public static void crearFloristeria(Indexacio indexacio) {
 
-		// sc = new Scanner(System.in);
+	public static void crearFloristeria() {
+
 		System.out.println("Crear Floristeria.\n");
-		
-		floristeria = new Floristeria();
-
 		System.out.println("nom : ");
 		String nom = sc.nextLine();
-		// floristeriaGestion.setNom(nom);
-		floristeria.setId(indexacio.getIndexFloristeria());
-		floristeria.setNom(nom);
+		floristeriaGestion.crearFloristeria(nom);
+	}
 
-		System.out.println("guardar la floristeria a la base de dades...");
+	private static void afegirArbre() {
 
-		// FloristeriaGestion floristeriaGestion
-		floristeriaGestion.setIndexacio(indexacio);
-		floristeriaGestion.setFloristeria(floristeria);
-
-		System.out.println("floristeria guardada.");
+		System.out.println("designacio : ");
+		String nom = sc.nextLine();
+		System.out.println("preu de compra : ");
+		double preu = sc.nextDouble();
+		sc.nextLine();
+		System.out.println("alcada del arbre : ");
+		float alcada = sc.nextFloat();
+		sc.nextLine();
+		floristeriaGestion.afegirArbre(nom, preu, alcada);
+	}
+	
+	public static void afegirFlor() {
+		// TODO Auto-generated method stub
 
 	}
 
 	public static void obrirFloristeria(Floristeria floristeria) {
-		floristeriaGestion.setFloristeria(floristeria);
+		// floristeriaGestion.setFloristeria(floristeria);
 	}
 
 	public static void visualitzarTotalGuanyats() {
 		// TODO Auto-generated method stub
 
 	}
-
-	
 
 	private static void mostrarCompres() {
 		// TODO Auto-generated method stub
@@ -239,13 +235,6 @@ public class Main {
 		// TODO Auto-generated method stub
 
 	}
-
-	public static void afegirFlor(Indexacio indexacio2) {
-		// TODO Auto-generated method stub
-
-	}
-
-	
 
 	
 

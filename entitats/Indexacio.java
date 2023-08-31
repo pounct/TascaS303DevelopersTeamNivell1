@@ -106,4 +106,9 @@ public class Indexacio {
 		return this;
 	}
 
+	public int getIndex(Floristeria floristeria) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -8,6 +8,7 @@ import java.util.Scanner;
 import entitats.Arbre;
 import entitats.Compra;
 import entitats.Decoracio;
+import entitats.Decoracio.Material;
 import entitats.Flor;
 import entitats.Floristeria;
 import entitats.Indexacio;
@@ -20,57 +21,67 @@ public class FloristeriaGestion {
 
 	// gestion floristeria
 	private Floristeria floristeria;
-	private String pathFloristeriaDB;
+	// private String pathFloristeriaDB;
 	private ArrayList<Floristeria> floristeries;
-	private EntitatsData entitatsData=new EntitatsData();
+	private EntitatsData entitatsData = new EntitatsData();
 	// gestion indexacio
 	private Indexacio indexacio;
 	// gestion producte
-	private List<Producte> productes;
-	private List<Arbre> arbres;
-	private List<Flor> flors;
-	private List<Decoracio> decoracions;
+	private ArrayList<Producte> productes = new ArrayList<>();
+	private ArrayList<Arbre> arbres = new ArrayList<>();
+	private ArrayList<Flor> flors = new ArrayList<>();
+	private ArrayList<Decoracio> decoracions = new ArrayList<>();
 	// gestion Stock
 	private Stock stock;
-	// stock.setArbres(Stock.getArbres());
-	private List<Compra> compres = new ArrayList<Compra>();
-	private List<Venda> vendes = new ArrayList<Venda>();
-	private List<LiniaCompra> liniesCompres = new ArrayList<LiniaCompra>();
-	private List<LiniaVenda> liniesVendes = new ArrayList<LiniaVenda>();
+	// gestion Compra Venda
+	private ArrayList<Compra> compres = new ArrayList<>();
+	private ArrayList<Venda> vendes = new ArrayList<>();
+	private ArrayList<LiniaCompra> liniesCompres = new ArrayList<>();
+	private ArrayList<LiniaVenda> liniesVendes = new ArrayList<>();
 	//////
-	private ArrayList<Indexacio> indexacions;
+	private ArrayList<Indexacio> indexacions = new ArrayList<>();
 	//////
 
 	public FloristeriaGestion() {
-		//entitatsData.setFloristeriaGestion(this);
-		
-//		floristeries = Persistencia.getData("Floristeria");
-//		stock = new Stock();//. . .
+	}
+	////////////////////////// funcionalitats:
+
+	// Crear Floristeria.
+	public void crearFloristeria(String nom) {
+
+		// initialtzar Indexacio
+		indexacio = new Indexacio(0, 0, 0, 0, 0, 0);
+		// Crear Floristeria.
+		floristeria = new Floristeria();
+		floristeria.setId(indexacio.getIndex(floristeria));
+		floristeria.setNom(nom);
+		// Guardar Floristeria
+		floristeries.add(floristeria);
+		entitatsData.crearDirectoriFloristeria(floristeria);
+		System.out.println("guardar la floristeria a la base de dades...");
+		entitatsData.saveFloristeries(floristeries);
+		System.out.println("floristeria guardada.");
 	}
 
-	public void afegirArbre(Indexacio indexacio, Scanner sc) {
+	// Afegir Arbre ///////////////////////////////////////
+	public void afegirArbre(String nom, double preu, float alcada) {
+		// Crear Arbre Producte compra i LiniaCompra
 		Arbre arbre = new Arbre();
 		Producte producte = new Producte();
 		Compra compra = new Compra();
 		LiniaCompra liniaCompra = new LiniaCompra();
+		// indexacio...
 		int producteId = indexacio.getIndexProducte();
 		int compraId = indexacio.getIndexCompra();
 		int liniaId = indexacio.getIndexLiniaCompra();
 		Date dateC = new Date(System.currentTimeMillis());
-		System.out.println("designacio : ");
-		String nom = sc.nextLine();
-		System.out.println("preu de compra : ");
-		double preu = sc.nextDouble();
-		sc.nextLine();
-		System.out.println("alcada del arbre : ");
-		float alcada = sc.nextFloat();
-		sc.nextLine();
+
 		// afegir Arbre
 		arbre.setId(producteId);
 		arbre.setAlcada(alcada);
 		this.arbres.add(arbre);
 
-		// update depemdencies
+		// afegir depemdencies
 		producte.setId(producteId);
 		producte.setDesignacio(nom);
 		this.productes.add(producte);
@@ -84,174 +95,96 @@ public class FloristeriaGestion {
 		liniaCompra.setProducteId(producteId);
 		liniaCompra.setPreu(preu);
 		this.liniesCompres.add(liniaCompra);
-
-		//entitatsData.update(floristeria.getNom());
-
+		// Guardar entitats
+		entitatsData.saveArbres(arbres);
+		entitatsData.saveCompres(compres);
+		entitatsData.saveLiniesCompres(liniesCompres);
+		entitatsData.saveProductes(productes);
 	}
 
-	public <T> void addToList(List<T> list, T o) {
-		list.add(o);
+	// Afegir Flor ///////////////////////////////////////
+	public void afegirFlor(String nom, double preu, String color) {
+		// Crear Flor Producte compra i LiniaCompra
+		Flor flor = new Flor();
+		Producte producte = new Producte();
+		Compra compra = new Compra();
+		LiniaCompra liniaCompra = new LiniaCompra();
+		// indexacio...
+		int producteId = indexacio.getIndexProducte();
+		int compraId = indexacio.getIndexCompra();
+		int liniaId = indexacio.getIndexLiniaCompra();
+		Date dateC = new Date(System.currentTimeMillis());
+
+		// afegir Flor
+		flor.setId(producteId);
+		flor.setColor(color);
+		this.flors.add(flor);
+
+		// afegir depemdencies
+		producte.setId(producteId);
+		producte.setDesignacio(nom);
+		this.productes.add(producte);
+		//////////////////////
+		compra.setId(compraId);
+		compra.setDate(dateC);
+		this.compres.add(compra);
+		////////////////////////
+		liniaCompra.setCompraId(compraId);
+		liniaCompra.setId(liniaId);
+		liniaCompra.setProducteId(producteId);
+		liniaCompra.setPreu(preu);
+		this.liniesCompres.add(liniaCompra);
+		// Guardar entitats
+		entitatsData.saveFlors(flors);
+		entitatsData.saveCompres(compres);
+		entitatsData.saveLiniesCompres(liniesCompres);
+		entitatsData.saveProductes(productes);
 	}
 
-	public <T> void removeFromList(List<T> list, T o) {
-		list.remove(o);
+	// Afegir Decoracio ///////////////////////////////////////
+	public void afegirDecoracio(String nom, double preu, Material material) {
+		// Crear Decoracio Producte compra i LiniaCompra
+		Decoracio decoracio = new Decoracio();
+		Producte producte = new Producte();
+		Compra compra = new Compra();
+		LiniaCompra liniaCompra = new LiniaCompra();
+		// indexacio...
+		int producteId = indexacio.getIndexProducte();
+		int compraId = indexacio.getIndexCompra();
+		int liniaId = indexacio.getIndexLiniaCompra();
+		Date dateC = new Date(System.currentTimeMillis());
+
+		// afegir Decoracio
+		decoracio.setId(producteId);
+		decoracio.setMaterial(material);
+		this.decoracions.add(decoracio);
+
+		// afegir depemdencies
+		producte.setId(producteId);
+		producte.setDesignacio(nom);
+		this.productes.add(producte);
+		//////////////////////
+		compra.setId(compraId);
+		compra.setDate(dateC);
+		this.compres.add(compra);
+		////////////////////////
+		liniaCompra.setCompraId(compraId);
+		liniaCompra.setId(liniaId);
+		liniaCompra.setProducteId(producteId);
+		liniaCompra.setPreu(preu);
+		this.liniesCompres.add(liniaCompra);
+		// Guardar entitats
+		entitatsData.saveDecoracions(decoracions);
+		entitatsData.saveCompres(compres);
+		entitatsData.saveLiniesCompres(liniesCompres);
+		entitatsData.saveProductes(productes);
 	}
+	
+	// Stock
 
-	public <T> void imprimirList(List<T> list) {
-		for (T t : list) {
-			System.out.println(t);
-		}
-	}
+	
 
-	public String getPathFloristeriaDB() {
-		return pathFloristeriaDB;
-	}
-
-	public void setPathFloristeriaDB(String pathFloristeriaDB) {
-		this.pathFloristeriaDB = pathFloristeriaDB;
-	}
-
-	public EntitatsData getEntitatsData() {
-		return entitatsData;
-	}
-
-	public void setEntitatsData(EntitatsData entitatsData) {
-		this.entitatsData = entitatsData;
-	}
-
-	public Stock getStock() {
-		return stock;
-	}
-
-	public void setStock(Stock stock) {
-		this.stock = stock;
-	}
-
-	public void setFloristeries(ArrayList<Floristeria> floristeries) {
-		this.floristeries = floristeries;
-	}
-
-	public ArrayList<Floristeria> getFloristeries() {
-		return floristeries;
-	}
-
-	public void setFloristeries(Floristeria[] floristeries) {
-		// this.floristeries = floristeries;
-	}
-
-	public Indexacio[] getIndexacions() {
-		return null;
-		// return indexacions;
-	}
-
-	public void setIndexacions(ArrayList<Indexacio> indexacions) {
-		this.indexacions = indexacions;
-	}
-
-	public Floristeria getFloristeria() {
-		return floristeria;
-	}
-
-	public void setFloristeria(Floristeria floristeria) {
-		// floristeria
-		this.floristeria = floristeria;
-		this.pathFloristeriaDB = "data_txt\\" + floristeria.getNom() + "\\";
-		//this.entitatsData.setFloristeria(floristeria);
-		// stock
-		// stock.setProductes();
-
-	}
-
-	public void loadFloristeria(Floristeria floristeria) {
-		this.pathFloristeriaDB = "data_txt\\" + floristeria.getNom() + "\\";
-		if (floristeries.contains(floristeria)) {
-			//entitatsData.loadEntitatsData(floristeria.getNom());
-			//arbres = entitatsData.getDataTable(null, floristeria);
-		}
-		this.floristeria = floristeria;
-		//this.setIndexacions(Persistencia.getData("Indexacio"));
-		this.indexacio = indexacions.get(0);
-		//this.setArbres(Persistencia.getData("arbre"));
-	}
-
-//	public List<Arbre> getArbres() {
-//		return stock.getArbres();
-//	}
-
-	public void setArbres(List<Arbre> arbres) {
-		stock.setArbres(arbres);
-		this.arbres = arbres;
-	}
-
-	public List<Flor> getFlors() {
-		return flors;
-	}
-
-	public void setFlors(List<Flor> flors) {
-		this.flors = flors;
-	}
-
-	public List<Decoracio> getDecoracio() {
-		return decoracions;
-	}
-
-	public void setDecoracio(List<Decoracio> decoracio) {
-		this.decoracions = decoracio;
-	}
-
-	public List<Compra> getCompres() {
-		return compres;
-	}
-
-	public void setCompres(List<Compra> compres) {
-		this.compres = compres;
-	}
-
-	public List<Venda> getVendes() {
-		return vendes;
-	}
-
-	public void setVendes(List<Venda> vendes) {
-		this.vendes = vendes;
-	}
-
-	public void save(Floristeria floristeria) {
-		//Persistencia.saveFloristeria(floristeria);
-	}
-
-	public Indexacio getIndexacio() {
-		return indexacio;
-	}
-
-	public void setIndexacio(Indexacio indexacio) {
-		this.indexacio = indexacio;
-	}
-
-	/*
-	 * public void inicialitzarIndexacio() { this.indexacio = indexacio; }
-	 */
-	@Override
-	public String toString() {
-		return "FloristeriaGestion [arbres=" + arbres + ", flors=" + flors + ", decoracio=" + decoracions + ", compres="
-				+ compres + ", vendes=" + vendes + "]";
-	}
-
-	public List<LiniaCompra> getLiniesCompres() {
-		return liniesCompres;
-	}
-
-	public void setLiniesCompres(List<LiniaCompra> liniesCompres) {
-		this.liniesCompres = liniesCompres;
-	}
-
-	public List<LiniaVenda> getLiniesVendes() {
-		return liniesVendes;
-	}
-
-	public void setLiniesVendes(List<LiniaVenda> liniesVendes) {
-		this.liniesVendes = liniesVendes;
-	}
-
-	// funcionalitats:
+	
+	/////////////////   fin  funcionalitats.
 
 }

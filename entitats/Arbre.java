@@ -2,7 +2,7 @@ package entitats;
 
 
 
-public class Arbre extends Producte implements Entitat{
+public class Arbre extends Producte {
 
 	private int id;
 	private float alcada; // alçada
@@ -26,7 +26,7 @@ public class Arbre extends Producte implements Entitat{
 		this.alcada = alcada;
 	}
 
-	@Override
+	
 	public Arbre fromString(String linia) {
 
 		String[] campos = linia.split("\t");
