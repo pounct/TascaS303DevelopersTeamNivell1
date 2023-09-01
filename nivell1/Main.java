@@ -75,35 +75,55 @@ public class Main {
 				break;
 			case 6:
 				// 6.Retirar arbre.
-				retirarArbre();
+				if (indexacio != null) {
+					retirarArbre();
+				} else {
+					System.out.println(" no hi ha floristeria!!!");
+				}
 
 				break;
 			case 7:
 				// 7.Retirar flor.
-				retirarFlor();
+				if (indexacio != null) {
+					retirarFlor();
+				} else {
+					System.out.println(" no hi ha floristeria!!!");
+				}
 
 				break;
 			case 8:
 				// 8.Retirar decoració.
-				retirarDecoracio();
+				if (indexacio != null) {
+					retirarDecoracio();
+				} else {
+					System.out.println(" no hi ha floristeria!!!");
+				}
 
 				break;
 			case 9:
 				// Printar per pantalla stock amb quantitats.
 				// 9.Stock Amb Quantitats
-				imprimirStockQuantitats();
+				if (indexacio != null) {
+					imprimirStockQuantitats();
+				} else {
+					System.out.println(" no hi ha floristeria!!!");
+				}
 
 				break;
 			case 10:
 				// Printar per pantalla valor total de la floristeria.
 				// 10.Valor Stock // Valor Compres // ValorVendes
-				imprimirValorStock();
+				if (indexacio != null) {
+					imprimirValorStock();
+				} else {
+					System.out.println(" no hi ha floristeria!!!");
+				}
 
 				break;
 			case 11:
 				// Crear tickets de compra amb múltiples objectes.
 				// 11.Compra amb múltiples objectes
-				ticketsCompra();
+				crearCompra();
 
 				break;
 			case 12:
@@ -214,7 +234,7 @@ public class Main {
 
 		Stock stock = floristeriaGestion.getstock();
 		System.out.println(" Stock Floristeria :");
-		System.out.println("Productes:\n");
+		System.out.println(" Productes:\n");
 		System.out.println("---- Arbres ----------");
 		System.out.println(stock.getArbres());
 		System.out.println("---- Flors -----------");
@@ -246,10 +266,11 @@ public class Main {
 		floristeriaGestion.retirarDecoracio(producteId);
 
 	}
+
 	public static void imprimirStockQuantitats() {
 		Stock stock = floristeriaGestion.getstock();
-		System.out.println(" Stock Floristeria :");
-		System.out.println("Productes:\n");
+		System.out.println(" Stock Floristeria Quantitats:");
+		System.out.println(" Productes:\n");
 		System.out.println("---- Arbres ----------");
 		System.out.println(stock.getArbres().size());
 		System.out.println("---- Flors -----------");
@@ -257,10 +278,57 @@ public class Main {
 		System.out.println("---- Decoracions -----");
 		System.out.println(stock.getDecoracions().size());
 	}
+
 	public static void imprimirValorStock() {
-		// TODO Auto-generated method stub
+		Stock stock = floristeriaGestion.getstock();
+		System.out.println(" Stock Floristeria Valor :");
+		System.out.println(" Productes:\n");
+		System.out.println("---- Valor Arbres ----------");
+		System.out.println(floristeriaGestion.getValorStockArbres());
+		System.out.println("---- Valor Flors -----------");
+		System.out.println(floristeriaGestion.getValorStockFlors());
+		System.out.println("---- Valor Decoracions -----");
+		System.out.println(floristeriaGestion.getValorStockDecoracions());
+	}
+
+	private static void crearCompra() {
+
+		int compraId = floristeriaGestion.crearIndexCompra();
+		boolean finCompra = false;
+		Byte opcion;
+		while (!finCompra) {
+			menuCompra();
+			opcion = sc.nextByte();
+			sc.nextLine();
+			switch (opcion) {
+			case 1:
+				afegirArbre();
+				break;
+			case 2:
+				afegirFlor();
+				break;
+			case 3:
+				afegirDecoracio();
+				break;
+			case 0:
+				finCompra = true;
+				System.out.println("--------- Fin de compra ---------");
+				break;
+			default:
+				break;
+			}
+		}
 
 	}
+
+	private static void menuCompra() {
+		System.out.println(" Menu Compra /n");
+		System.out.println(" 1.Afegir Arbre.");
+		System.out.println(" 2.Afegir Flor.");
+		System.out.println(" 4.Afegir Decoració.");
+		System.out.println(" 0.fin");
+	}
+
 	//////////////////////////////////////////////////////
 
 	public static void obrirFloristeria(Floristeria floristeria) {
@@ -276,14 +344,5 @@ public class Main {
 		// TODO Auto-generated method stub
 
 	}
-
-	private static void ticketsCompra() {
-		// TODO Auto-generated method stub
-
-	}
-
-	
-
-
 
 }
