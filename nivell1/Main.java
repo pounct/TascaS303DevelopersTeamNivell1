@@ -4,6 +4,7 @@ package nivell1;
 import java.util.List;
 import java.util.Scanner;
 
+import entitats.Decoracio.Material;
 import entitats.Floristeria;
 import entitats.Indexacio;
 import entitats.Producte;
@@ -55,17 +56,22 @@ public class Main {
 			case 4:
 				// 4.Afegir Decoració.
 				if (indexacio != null) {
-					afegirDecoracio(indexacio);
+					afegirDecoracio();
 				} else {
 					System.out.println(" no hi ha floristeria!!!");
 				}
 
 				break;
 			case 5:
-				// Stock: Imprimeix per pantalla tots els arbres, flors i decoració 
+				// Stock: Imprimeix per pantalla tots els arbres, flors i decoració
 				// que té la floristeria.
 				// 5.Stock
-				imprimirStock();// stock.getProductes()
+				if (indexacio != null) {
+					imprimirStock();
+				} else {
+					System.out.println(" no hi ha floristeria!!!");
+				}
+
 				break;
 			case 6:
 				// 6.Retirar arbre.
@@ -85,13 +91,13 @@ public class Main {
 			case 9:
 				// Printar per pantalla stock amb quantitats.
 				// 9.Stock Amb Quantitats
-				imprimirStockQuantitats(null);// Stock.getProductes()
+				imprimirStockQuantitats();
 
 				break;
 			case 10:
 				// Printar per pantalla valor total de la floristeria.
 				// 10.Valor Stock // Valor Compres // ValorVendes
-				imprimirValorStock(null);// Stock.getProductes()
+				imprimirValorStock();
 
 				break;
 			case 11:
@@ -136,17 +142,6 @@ public class Main {
 		}
 	}
 
-	public static void imprimirStock() {
-		floristeriaGestion.calcularStock();
-		System.out.println("Stock : ");
-		System.out.println("Arbres : ");
-		System.out.println(floristeriaGestion.getstock().getArbres());
-		System.out.println("flors : ");	
-		System.out.println(floristeriaGestion.getstock().getFlors());
-		System.out.println("Decoracions");
-		System.out.println(floristeriaGestion.getstock().getDecoracions());
-	}
-
 	public static void menuPrincipal() {
 		System.out.println(" Floristeria:" + ((floristeria != null) ? floristeria.getNom() : ""));
 		System.out.println("\n\n");
@@ -187,14 +182,89 @@ public class Main {
 		sc.nextLine();
 		floristeriaGestion.afegirArbre(nom, preu, alcada);
 	}
-	
+
 	public static void afegirFlor() {
-		// TODO Auto-generated method stub
+
+		System.out.println("designacio : ");
+		String nom = sc.nextLine();
+		System.out.println("preu de compra : ");
+		double preu = sc.nextDouble();
+		sc.nextLine();
+		System.out.println("color del arbre : ");
+		String color = sc.nextLine();
+		sc.nextLine();
+		floristeriaGestion.afegirFlor(nom, preu, color);
+	}
+
+	public static void afegirDecoracio() {
+
+		System.out.println("designacio : ");
+		String nom = sc.nextLine();
+		System.out.println("preu de compra : ");
+		double preu = sc.nextDouble();
+		sc.nextLine();
+		System.out.println("material del arbre : \n" + "1.Plastic" + "2.Fusta\n");
+		byte tipoMaterial = sc.nextByte();
+		Material material = (tipoMaterial == 1) ? Material.FUSTA : Material.PLASTIC;
+		sc.nextLine();
+		floristeriaGestion.afegirDecoracio(nom, preu, material);
+	}
+
+	public static void imprimirStock() {
+
+		Stock stock = floristeriaGestion.getstock();
+		System.out.println(" Stock Floristeria :");
+		System.out.println("Productes:\n");
+		System.out.println("---- Arbres ----------");
+		System.out.println(stock.getArbres());
+		System.out.println("---- Flors -----------");
+		System.out.println(stock.getFlors());
+		System.out.println("---- Decoracions -----");
+		System.out.println(stock.getDecoracions());
+	}
+
+	public static void retirarArbre() {
+
+		System.out.println("id del arbre a retirar :");
+		int producteId = sc.nextInt();
+		floristeriaGestion.retirarArbre(producteId);
 
 	}
 
+	public static void retirarFlor() {
+
+		System.out.println("id del flor a retirar :");
+		int producteId = sc.nextInt();
+		floristeriaGestion.retirarFlor(producteId);
+
+	}
+
+	public static void retirarDecoracio() {
+
+		System.out.println("id del decoracio a retirar :");
+		int producteId = sc.nextInt();
+		floristeriaGestion.retirarDecoracio(producteId);
+
+	}
+	public static void imprimirStockQuantitats() {
+		Stock stock = floristeriaGestion.getstock();
+		System.out.println(" Stock Floristeria :");
+		System.out.println("Productes:\n");
+		System.out.println("---- Arbres ----------");
+		System.out.println(stock.getArbres().size());
+		System.out.println("---- Flors -----------");
+		System.out.println(stock.getFlors().size());
+		System.out.println("---- Decoracions -----");
+		System.out.println(stock.getDecoracions().size());
+	}
+	public static void imprimirValorStock() {
+		// TODO Auto-generated method stub
+
+	}
+	//////////////////////////////////////////////////////
+
 	public static void obrirFloristeria(Floristeria floristeria) {
-		// floristeriaGestion.setFloristeria(floristeria);
+
 	}
 
 	public static void visualitzarTotalGuanyats() {
@@ -212,36 +282,8 @@ public class Main {
 
 	}
 
-	private static void imprimirValorStock(List<Producte> productes) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void imprimirStockQuantitats(List<Producte> productes) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void retirarDecoracio() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void retirarFlor() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void retirarArbre() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public static void afegirDecoracio(Indexacio indexacio2) {
-		// TODO Auto-generated method stub
-
-	}
-
 	
+
+
 
 }

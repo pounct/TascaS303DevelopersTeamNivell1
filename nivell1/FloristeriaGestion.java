@@ -185,9 +185,81 @@ public class FloristeriaGestion {
 	}
 
 	// Stock
+	// Resultat Stock
+	public Stock getstock() {
+		calcularStock();
+		return stock;
+	}
+
+	// Retirar Arbre
+	public void retirarArbre(int producteId) {
+		Producte producte = getProducte(producteId);
+		if (producte != null) {
+			this.productes.remove(producte);
+			this.arbres.remove(getArbre(producteId));
+			LiniaCompra liniaCompra = getLiniaCompraByProducteId(producteId);
+			// otre control.....
+			this.liniesCompres.remove(liniaCompra);
+			LiniaVenda liniaVenda = getLiniaVendaByProducteId(producteId);
+			if (liniaVenda != null) {
+				this.liniesVendes.remove(liniaVenda);
+			}
+			entitatsData.saveArbres(arbres);
+			entitatsData.saveProductes(productes);
+			entitatsData.saveLiniesCompres(liniesCompres);
+			entitatsData.saveLiniesVendes(liniesVendes);
+		}
+	}
+
+	// Retirar Arbre
+	public void retirarFlor(int producteId) {
+		Producte producte = getProducte(producteId);
+		if (producte != null) {
+			this.productes.remove(producte);
+			this.flors.remove(getFlor(producteId));
+			LiniaCompra liniaCompra = getLiniaCompraByProducteId(producteId);
+			// otre control.....
+			this.liniesCompres.remove(liniaCompra);
+			LiniaVenda liniaVenda = getLiniaVendaByProducteId(producteId);
+			if (liniaVenda != null) {
+				this.liniesVendes.remove(liniaVenda);
+			}
+			entitatsData.saveFlors(flors);
+			entitatsData.saveProductes(productes);
+			entitatsData.saveLiniesCompres(liniesCompres);
+			entitatsData.saveLiniesVendes(liniesVendes);
+		}
+	}
+
+	// Retirar Decoracio
+	public void retirarDecoracio(int producteId) {
+		Producte producte = getProducte(producteId);
+		if (producte != null) {
+			this.productes.remove(producte);
+			this.decoracions.remove(getDecoracio(producteId));
+			LiniaCompra liniaCompra = getLiniaCompraByProducteId(producteId);
+			// otre control.....
+			this.liniesCompres.remove(liniaCompra);
+			LiniaVenda liniaVenda = getLiniaVendaByProducteId(producteId);
+			if (liniaVenda != null) {
+				this.liniesVendes.remove(liniaVenda);
+			}
+			entitatsData.saveDecoracions(decoracions);
+			entitatsData.saveProductes(productes);
+			entitatsData.saveLiniesCompres(liniesCompres);
+			entitatsData.saveLiniesVendes(liniesVendes);
+		}
+	}
+	
+	//Stock Amb Quantitats
+	//  =getStock -> size() dels arbres, ....
+	
+	
+
+	///////////////// fin funcionalitats.
 
 	public void calcularStock() {
-		// inicialitzar entitats
+		// inicialitzar entitats Stock
 		liniesCompres = entitatsData.getLiniesCompres();
 		liniesVendes = entitatsData.getLiniesVendes();
 		productes = entitatsData.getProductes();
@@ -216,19 +288,19 @@ public class FloristeriaGestion {
 				stock.addProducte(producte);
 			}
 		});
-		
+
 		arbres.forEach(arbre -> {
 			if (productesIds.contains(arbre.getId())) {
 				stock.addArbre(arbre);
 			}
 		});
-		
+
 		flors.forEach(flor -> {
 			if (productesIds.contains(flor.getId())) {
 				stock.addFlor(flor);
 			}
 		});
-		
+
 		decoracions.forEach(decoracio -> {
 			if (productesIds.contains(decoracio.getId())) {
 				stock.addDecoracio(decoracio);
@@ -237,10 +309,104 @@ public class FloristeriaGestion {
 
 	}
 
-	public Stock getstock() {
-		return stock;
+	public Producte getProducte(int producteId) {
+
+		Producte producte = null;
+		int i = 0;
+		int num = productes.size();
+		while (producte == null && i < num) {
+			int id = productes.get(i).getId();
+
+			if (id == producteId) {
+				producte = productes.get(i);
+			}
+		}
+		return producte;
 	}
 
-	///////////////// fin funcionalitats.
+	public Arbre getArbre(int producteId) {
+
+		Arbre producte = null;
+		int i = 0;
+		int num = arbres.size();
+		while (producte == null && i < num) {
+			int id = arbres.get(i).getId();
+
+			if (id == producteId) {
+				producte = arbres.get(i);
+			} else {
+				i++;
+			}
+		}
+		return producte;
+	}
+
+	public Flor getFlor(int producteId) {
+
+		Flor producte = null;
+		int i = 0;
+		int num = flors.size();
+		while (producte == null && i < num) {
+			int id = flors.get(i).getId();
+
+			if (id == producteId) {
+				producte = flors.get(i);
+			} else {
+				i++;
+			}
+		}
+		return producte;
+	}
+
+	public Decoracio getDecoracio(int producteId) {
+
+		Decoracio producte = null;
+		int i = 0;
+		int num = decoracions.size();
+		while (producte == null && i < num) {
+			int id = decoracions.get(i).getId();
+
+			if (id == producteId) {
+				producte = decoracions.get(i);
+			} else {
+				i++;
+			}
+		}
+		return producte;
+	}
+
+	public LiniaCompra getLiniaCompraByProducteId(int producteId) {
+
+		LiniaCompra producteLiniaCompra = null;
+		int i = 0;
+		int num = liniesCompres.size();
+		while (producteLiniaCompra == null && i < num) {
+			int id = liniesCompres.get(i).getProducteId();
+
+			if (id == producteId) {
+				producteLiniaCompra = liniesCompres.get(i);
+			} else {
+				i++;
+			}
+		}
+		return producteLiniaCompra;
+	}
+
+	public LiniaVenda getLiniaVendaByProducteId(int producteId) {
+
+		LiniaVenda producteLiniaVenda = null;
+		int i = 0;
+		int num = liniesVendes.size();
+		while (producteLiniaVenda == null && i < num) {
+			int id = liniesVendes.get(i).getProducteId();
+
+			if (id == producteId) {
+				producteLiniaVenda = liniesVendes.get(i);
+			} else {
+				i++;
+			}
+		}
+		return producteLiniaVenda;
+	}
 
 }
