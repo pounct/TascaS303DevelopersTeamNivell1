@@ -250,11 +250,37 @@ public class FloristeriaGestion {
 			entitatsData.saveLiniesVendes(liniesVendes);
 		}
 	}
-	
-	//Stock Amb Quantitats
-	//  =getStock -> size() dels arbres, ....
-	
-	
+
+	// Stock Amb Quantitats
+	// =getStock -> size() dels arbres, ....
+
+	// Valor Stock
+	// Valor Arbres
+	public double getValorStockArbres() {
+		double valor = 0;
+		for (Arbre arb : stock.getArbres()) {
+			valor += getLiniaCompraByProducteId(arb.getId()).getPreu();
+		}
+		return valor;
+	}
+
+	// Valor Flors
+	public double getValorStockFlors() {
+		double valor = 0;
+		for (Flor flo : stock.getFlors()) {
+			valor += getLiniaCompraByProducteId(flo.getId()).getPreu();
+		}
+		return valor;
+	}
+
+	// Valor Decoracio
+	public double getValorStockDecoracions() {
+		double valor = 0;
+		for (Decoracio dec : stock.getDecoracions()) {
+			valor += getLiniaCompraByProducteId(dec.getId()).getPreu();
+		}
+		return valor;
+	}
 
 	///////////////// fin funcionalitats.
 
@@ -407,6 +433,11 @@ public class FloristeriaGestion {
 			}
 		}
 		return producteLiniaVenda;
+	}
+
+	public int crearIndexCompra() {
+
+		return indexacio.getIndexCompra();
 	}
 
 }
