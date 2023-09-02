@@ -27,7 +27,8 @@ public class EntitatsData {
 	private ArrayList<Venda> vendes;
 	
 	private Floristeria floristeria;
-	private String pathFloristeriaDB = "data_txt\\" + floristeria.getNom() + "db\\";
+	//  = "data_txt\\" + floristeria.getNom() + "db\\"
+	private String pathFloristeriaDB;
 	private String path; // to fitxer
 
 	
@@ -147,13 +148,16 @@ public class EntitatsData {
 	}
 
 	public void setFloristeria(Floristeria floristeria) {
+		// .\\src\\nivell1\\java\\n2exercici1\\treballador.json
+		// /TascaS303DevelopersTeam/src/nivell1/EntitatsData.java
+		pathFloristeriaDB = ".\\src\\nivell1\\data_txt\\" + floristeria.getNom() + "db\\";
 		this.floristeria = floristeria;
 	}
 
 //	floristeries Floristeria
 
 	public ArrayList<Floristeria> getFloristeries() {
-		path = "data_txt\\" + "Floristeria" + "Data.txt";
+		path = ".\\src\\nivell1\\data_txt\\" + "Floristeria" + "Data.txt";
 		floristeries = liniesToFloristeries(Persistencia.getLinies(path));
 		return floristeries;
 	}
@@ -167,7 +171,7 @@ public class EntitatsData {
 	}
 
 	public void saveFloristeries(ArrayList<Floristeria> floristeries) {
-		path = "data_txt\\" + "Floristeria" + "Data.txt";
+		path = ".\\src\\nivell1\\data_txt\\" + "Floristeria" + "Data.txt";
 		Persistencia.saveLines(floristeriesToLinies(floristeries), path);
 
 	}
@@ -308,9 +312,10 @@ public class EntitatsData {
 		vendes.forEach(venda -> linies.add(venda.toString()));
 		return linies;
 	}
+	
+	// dirctori db
 
 	public void crearDirectoriFloristeria(Floristeria floristeria) {
-		setFloristeria(floristeria);		
 		ServeisData.crearDirectori(pathFloristeriaDB);		
 	}
 

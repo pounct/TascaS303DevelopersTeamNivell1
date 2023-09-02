@@ -1,0 +1,2 @@
+0	arbre1
+1	arbre2

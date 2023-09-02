@@ -21,10 +21,10 @@ public class FloristeriaGestion {
 	// gestion floristeria
 	private Floristeria floristeria;
 	// private String pathFloristeriaDB;
-	private ArrayList<Floristeria> floristeries;
+	private ArrayList<Floristeria> floristeries = new ArrayList<>();
 	private EntitatsData entitatsData = new EntitatsData();
 	// gestion indexacio
-	private Indexacio indexacio;
+	private Indexacio indexacio;	
 	// gestion producte
 	private ArrayList<Producte> productes = new ArrayList<>();
 	private ArrayList<Arbre> arbres = new ArrayList<>();
@@ -42,11 +42,17 @@ public class FloristeriaGestion {
 	//////
 
 	public FloristeriaGestion() {
+		
 	}
+	public Indexacio getIndexacio() {
+		return indexacio;
+	}
+
+	
 	////////////////////////// funcionalitats:
 
 	// Crear Floristeria.
-	public void crearFloristeria(String nom) {
+	public Floristeria crearFloristeria(String nom) {
 
 		// Crear i initialtzar Indexacio
 		indexacio = new Indexacio(0, 0, 0, 0, 0, 0);
@@ -57,11 +63,13 @@ public class FloristeriaGestion {
 		floristeria.setNom(nom);
 		// Guardar Floristeria
 		floristeries.add(floristeria);
+		entitatsData.setFloristeria(floristeria);
 		entitatsData.crearDirectoriFloristeria(floristeria);
 		System.out.println("guardar la floristeria a la base de dades...");
 		entitatsData.saveFloristeries(floristeries);
 		entitatsData.saveIndexacions(indexacions);
 		System.out.println("floristeria guardada.");
+		return floristeria;
 	}
 
 	// Afegir Arbre ///////////////////////////////////////
@@ -281,8 +289,23 @@ public class FloristeriaGestion {
 		}
 		return valor;
 	}
+	
+	// 
+	public Compra crearCompra() {
+		Compra compra = new Compra();
+		
+		int compraId = indexacio.getIndexCompra();
+		Date dateC = new Date(System.currentTimeMillis());
+		
+		compra.setId(compraId);
+		compra.setDate(dateC);
+		
 
-	///////////////// fin funcionalitats.
+		return compra;
+	}
+
+	///////////////// fin funcionalitats.////////////////////
+	/////////////////////////////////////////////////////////
 
 	public void calcularStock() {
 		// inicialitzar entitats Stock
@@ -435,9 +458,6 @@ public class FloristeriaGestion {
 		return producteLiniaVenda;
 	}
 
-	public int crearIndexCompra() {
 
-		return indexacio.getIndexCompra();
-	}
 
 }

@@ -18,7 +18,7 @@ public class ServeisData {
 		// Crear una instancia de la classe File
 		File f1 = new File(path);
 		// Creació de carpeta amb el mètode mkdir().
-		boolean bool = f1.mkdir();
+		boolean bool = f1.mkdirs();
 		if (bool) {
 			System.out.println("La carpeta s'ha creat correctament");
 		} else {

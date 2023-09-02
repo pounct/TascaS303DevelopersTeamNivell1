@@ -1,21 +1,20 @@
 package nivell1;
 
-//import java.sql.Date;
-import java.util.List;
 import java.util.Scanner;
 
+import entitats.Compra;
 import entitats.Decoracio.Material;
 import entitats.Floristeria;
 import entitats.Indexacio;
-import entitats.Producte;
 
 public class Main {
 	/*
 	 * Amb gestió de percistància en un fitxer TXT.
 	 */
 	static Floristeria floristeria;
-	static FloristeriaGestion floristeriaGestion;
 	static Indexacio indexacio;
+
+	static FloristeriaGestion floristeriaGestion;
 
 	public static Scanner sc = new Scanner(System.in);
 
@@ -163,8 +162,8 @@ public class Main {
 	}
 
 	public static void menuPrincipal() {
-		System.out.println(" Floristeria:" + ((floristeria != null) ? floristeria.getNom() : ""));
-		System.out.println("\n\n");
+		System.out.println(" Floristeria : " + ((floristeria != null) ? floristeria.getNom() : ""));
+		System.out.println("-----------------\n");
 		System.out.println(" 1.Crear Floristeria."); // obrir floristeria
 		System.out.println(" 14.Obrir Floristeria.");
 		System.out.println(" 2.Afegir Arbre.");
@@ -187,7 +186,9 @@ public class Main {
 		System.out.println("Crear Floristeria.\n");
 		System.out.println("nom : ");
 		String nom = sc.nextLine();
-		floristeriaGestion.crearFloristeria(nom);
+		// Crear i recuperar Floristeria
+		floristeria = floristeriaGestion.crearFloristeria(nom);
+		indexacio = floristeriaGestion.getIndexacio();
 	}
 
 	private static void afegirArbre() {
@@ -280,7 +281,7 @@ public class Main {
 	}
 
 	public static void imprimirValorStock() {
-		Stock stock = floristeriaGestion.getstock();
+		//Stock stock = floristeriaGestion.getstock();
 		System.out.println(" Stock Floristeria Valor :");
 		System.out.println(" Productes:\n");
 		System.out.println("---- Valor Arbres ----------");
@@ -293,7 +294,7 @@ public class Main {
 
 	private static void crearCompra() {
 
-		int compraId = floristeriaGestion.crearIndexCompra();
+		Compra compra = floristeriaGestion.crearCompra();
 		boolean finCompra = false;
 		Byte opcion;
 		while (!finCompra) {
@@ -302,7 +303,7 @@ public class Main {
 			sc.nextLine();
 			switch (opcion) {
 			case 1:
-				afegirArbre();
+				afegirArbre(compra);
 				break;
 			case 2:
 				afegirFlor();
@@ -318,6 +319,11 @@ public class Main {
 				break;
 			}
 		}
+
+	}
+
+	private static void afegirArbre(Compra compra) {
+		// TODO Auto-generated method stub
 
 	}
 
