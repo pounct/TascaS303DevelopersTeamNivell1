@@ -104,7 +104,7 @@ public class EntitatsData {
 	}
 
 	public void saveDecoracions(ArrayList<Decoracio> decoracions) {
-		path = pathFloristeriaDB + "Compra" + "Data.txt";
+		path = pathFloristeriaDB + "Decoracio" + "Data.txt";
 		Persistencia.saveLines(decoracionsToLinies(decoracions), path);
 	}
 

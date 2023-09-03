@@ -1,0 +1,3 @@
+0	arbre1
+1	arbre2
+2	deco1

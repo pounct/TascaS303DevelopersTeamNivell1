@@ -24,7 +24,7 @@ public class FloristeriaGestion {
 	private ArrayList<Floristeria> floristeries = new ArrayList<>();
 	private EntitatsData entitatsData = new EntitatsData();
 	// gestion indexacio
-	private Indexacio indexacio;	
+	private Indexacio indexacio;
 	// gestion producte
 	private ArrayList<Producte> productes = new ArrayList<>();
 	private ArrayList<Arbre> arbres = new ArrayList<>();
@@ -42,13 +42,13 @@ public class FloristeriaGestion {
 	//////
 
 	public FloristeriaGestion() {
-		
+
 	}
+
 	public Indexacio getIndexacio() {
 		return indexacio;
 	}
 
-	
 	////////////////////////// funcionalitats:
 
 	// Crear Floristeria.
@@ -104,7 +104,7 @@ public class FloristeriaGestion {
 		liniaCompra.setProducteId(producteId);
 		liniaCompra.setPreu(preu);
 		this.liniesCompres.add(liniaCompra);
-		// Guardar entitats
+		// Guardar modificacions (entitats)
 		entitatsData.saveIndexacions(indexacions);
 		entitatsData.saveArbres(arbres);
 		entitatsData.saveCompres(compres);
@@ -289,17 +289,19 @@ public class FloristeriaGestion {
 		}
 		return valor;
 	}
-	
-	// 
+
+	//
 	public Compra crearCompra() {
 		Compra compra = new Compra();
-		
+
 		int compraId = indexacio.getIndexCompra();
 		Date dateC = new Date(System.currentTimeMillis());
-		
+
 		compra.setId(compraId);
 		compra.setDate(dateC);
-		
+
+		this.compres.add(compra);
+		entitatsData.saveCompres(compres);
 
 		return compra;
 	}
@@ -458,6 +460,178 @@ public class FloristeriaGestion {
 		return producteLiniaVenda;
 	}
 
+	// Afegir Arbre Amb Compra
 
+	public void afegirArbre(String nom, double preu, float alcada, Compra compra) {
+
+		// Crear Arbre Producte compra i LiniaCompra
+		Arbre arbre = new Arbre();
+		Producte producte = new Producte();
+		// Compra compra = new Compra();
+		LiniaCompra liniaCompra = new LiniaCompra();
+		// indexacio...
+		int producteId = indexacio.getIndexProducte();
+		// int compraId = indexacio.getIndexCompra();
+		int liniaId = indexacio.getIndexLiniaCompra();
+		// Date dateC = new Date(System.currentTimeMillis());
+
+		// afegir Arbre
+		arbre.setId(producteId);
+		arbre.setAlcada(alcada);
+		this.arbres.add(arbre);
+
+		// afegir depemdencies
+		producte.setId(producteId);
+		producte.setDesignacio(nom);
+		this.productes.add(producte);
+		//////////////////////
+		// compra.setId(compraId);
+		// compra.setDate(dateC);
+		// this.compres.add(compra);
+		////////////////////////
+		liniaCompra.setCompraId(compra.getId());
+		liniaCompra.setId(liniaId);
+		liniaCompra.setProducteId(producteId);
+		liniaCompra.setPreu(preu);
+		this.liniesCompres.add(liniaCompra);
+		// Guardar modificacions (entitats)
+		entitatsData.saveIndexacions(indexacions);
+		entitatsData.saveArbres(arbres);
+		// entitatsData.saveCompres(compres);
+		entitatsData.saveLiniesCompres(liniesCompres);
+		entitatsData.saveProductes(productes);
+
+	}
+
+	public void afegirFlor(String nom, double preu, String color, Compra compra) {
+		// Crear Flor Producte compra i LiniaCompra
+		Flor flor = new Flor();
+		Producte producte = new Producte();
+		// Compra compra = new Compra();
+		LiniaCompra liniaCompra = new LiniaCompra();
+		// indexacio...
+		int producteId = indexacio.getIndexProducte();
+		// int compraId = indexacio.getIndexCompra();
+		int liniaId = indexacio.getIndexLiniaCompra();
+		// Date dateC = new Date(System.currentTimeMillis());
+
+		// afegir Flor
+		flor.setId(producteId);
+		flor.setColor(color);
+		this.flors.add(flor);
+
+		// afegir depemdencies
+		producte.setId(producteId);
+		producte.setDesignacio(nom);
+		this.productes.add(producte);
+		//////////////////////
+		// compra.setId(compraId);
+		// compra.setDate(dateC);
+		// this.compres.add(compra);
+		////////////////////////
+		liniaCompra.setCompraId(compra.getId());
+		liniaCompra.setId(liniaId);
+		liniaCompra.setProducteId(producteId);
+		liniaCompra.setPreu(preu);
+		this.liniesCompres.add(liniaCompra);
+		// Guardar entitats
+		entitatsData.saveIndexacions(indexacions);
+		entitatsData.saveFlors(flors);
+		// entitatsData.saveCompres(compres);
+		entitatsData.saveLiniesCompres(liniesCompres);
+		entitatsData.saveProductes(productes);
+
+	}
+
+	public void afegirDecoracio(String nom, double preu, Material material, Compra compra) {
+
+		// Crear Decoracio Producte compra i LiniaCompra
+		Decoracio decoracio = new Decoracio();
+		Producte producte = new Producte();
+		// Compra compra = new Compra();
+		LiniaCompra liniaCompra = new LiniaCompra();
+		// indexacio...
+		int producteId = indexacio.getIndexProducte();
+		// int compraId = indexacio.getIndexCompra();
+		int liniaId = indexacio.getIndexLiniaCompra();
+		// Date dateC = new Date(System.currentTimeMillis());
+
+		// afegir Decoracio
+		decoracio.setId(producteId);
+		decoracio.setMaterial(material);
+		this.decoracions.add(decoracio);
+
+		// afegir depemdencies
+		producte.setId(producteId);
+		producte.setDesignacio(nom);
+		this.productes.add(producte);
+		//////////////////////
+		// compra.setId(compraId);
+		// compra.setDate(dateC);
+		// this.compres.add(compra);
+		////////////////////////
+		liniaCompra.setCompraId(compra.getId());
+		liniaCompra.setId(liniaId);
+		liniaCompra.setProducteId(producteId);
+		liniaCompra.setPreu(preu);
+		this.liniesCompres.add(liniaCompra);
+		// Guardar entitats
+		entitatsData.saveIndexacions(indexacions);
+		entitatsData.saveDecoracions(decoracions);
+		// entitatsData.saveCompres(compres);
+		entitatsData.saveLiniesCompres(liniesCompres);
+		entitatsData.saveProductes(productes);
+
+	}
+
+	// Compres Antigues.
+	public String mostrarCompres() {
+		String resultat = "";
+		double totalCompra = 0;
+		double totalCompres = 0;
+
+		for (Compra compra : compres) {
+			resultat += "--------------------------------------------\n";
+			resultat += compra.getId() + compra.getDate().toString() + "\n";
+			resultat += "--------------------------------------------\n";
+			resultat += "\n";
+			for (LiniaCompra liniaCompra : liniesCompres) {
+				totalCompra = 0;
+				if (liniaCompra.getCompraId() == compra.getId()) {
+					resultat += "" + liniaCompra.getId() + getProducte(liniaCompra.getProducteId()).getDesignacio()
+							+ liniaCompra.getPreu();
+					resultat += "\n";
+					totalCompra += liniaCompra.getPreu();
+				}
+
+			}
+			resultat += "--------------------------------------------\n";
+			resultat += "\t\t\t\t\t\t total Compra :" + totalCompra + "\n";
+			resultat += "--------------------------------------------\n\n";
+			totalCompres += totalCompra;
+
+		}
+		resultat += "--------------------------------------------\n";
+		resultat += "--------------------------------------------\n";
+		resultat += "\t\t\t\t\t\t total Compres :" + totalCompres + "\n";
+		resultat += "--------------------------------------------\n";
+		return resultat;
+	}
+
+	public double getTotalCompres() {
+		double totalCompres = 0;
+		for (LiniaCompra liniaCompra : liniesCompres) {
+			totalCompres += liniaCompra.getPreu();
+		}
+		return totalCompres;
+	}
+
+	public double getTotalVendes() {
+		double totalVendes = 0;
+		for (LiniaCompra liniaCompra:liniesCompres) {
+			totalVendes += liniaCompra.getPreu();
+		}
+		return totalVendes;
+	}
 
 }

@@ -211,9 +211,8 @@ public class Main {
 		System.out.println("preu de compra : ");
 		double preu = sc.nextDouble();
 		sc.nextLine();
-		System.out.println("color del arbre : ");
+		System.out.println("color del flor : ");
 		String color = sc.nextLine();
-		sc.nextLine();
 		floristeriaGestion.afegirFlor(nom, preu, color);
 	}
 
@@ -281,7 +280,7 @@ public class Main {
 	}
 
 	public static void imprimirValorStock() {
-		//Stock stock = floristeriaGestion.getstock();
+		// Stock stock = floristeriaGestion.getstock();
 		System.out.println(" Stock Floristeria Valor :");
 		System.out.println(" Productes:\n");
 		System.out.println("---- Valor Arbres ----------");
@@ -306,10 +305,10 @@ public class Main {
 				afegirArbre(compra);
 				break;
 			case 2:
-				afegirFlor();
+				afegirFlor(compra);
 				break;
 			case 3:
-				afegirDecoracio();
+				afegirDecoracio(compra);
 				break;
 			case 0:
 				finCompra = true;
@@ -322,17 +321,72 @@ public class Main {
 
 	}
 
-	private static void afegirArbre(Compra compra) {
-		// TODO Auto-generated method stub
+	private static void menuCompra() {
+		System.out.println(" Menu Compra :\n");
+		System.out.println(" 1.Afegir Arbre.");
+		System.out.println(" 2.Afegir Flor.");
+		System.out.println(" 3.Afegir Decoració.");
+		System.out.println(" 0.fin Compra");
+	}
+
+	private static void mostrarCompres() {
+		System.out.println(" Compres :\n");
+		System.out.println(floristeriaGestion.mostrarCompres());
+	}
+
+	public static void visualitzarTotalGuanyats() {
+		System.out.println(" Total Guanyats \n");
+		System.out.println(" --------------:\n");
+		System.out.println(" Total de despeses :");
+		double totalDespeses = sc.nextDouble();
+		sc.nextLine();
+		System.out.println(" Total Compres :");
+		double totalCompres = floristeriaGestion.getTotalCompres();
+		System.out.println(" Total Vendes :");
+		double totalVendes = floristeriaGestion.getTotalVendes();
+		System.out.println(" Total Guanyats :");
 
 	}
 
-	private static void menuCompra() {
-		System.out.println(" Menu Compra /n");
-		System.out.println(" 1.Afegir Arbre.");
-		System.out.println(" 2.Afegir Flor.");
-		System.out.println(" 4.Afegir Decoració.");
-		System.out.println(" 0.fin");
+	private static void afegirArbre(Compra compra) {
+
+		System.out.println("designacio : ");
+		String nom = sc.nextLine();
+		System.out.println("preu de compra : ");
+		double preu = sc.nextDouble();
+		sc.nextLine();
+		System.out.println("alcada del arbre : ");
+		float alcada = sc.nextFloat();
+		sc.nextLine();
+		floristeriaGestion.afegirArbre(nom, preu, alcada, compra);
+
+	}
+
+	private static void afegirFlor(Compra compra) {
+		System.out.println("designacio : ");
+		String nom = sc.nextLine();
+		System.out.println("preu de compra : ");
+		double preu = sc.nextDouble();
+		sc.nextLine();
+		System.out.println("color del flor : ");
+		String color = sc.nextLine();
+		sc.nextLine();
+		floristeriaGestion.afegirFlor(nom, preu, color, compra);
+
+	}
+
+	private static void afegirDecoracio(Compra compra) {
+		System.out.println("designacio : ");
+		String nom = sc.nextLine();
+		System.out.println("preu de compra : ");
+		double preu = sc.nextDouble();
+		sc.nextLine();
+		System.out.println("material del arbre : \n" + "1.Plastic" + "2.Fusta\n");
+		byte tipoMaterial = sc.nextByte();
+		Material material = (tipoMaterial == 1) ? Material.FUSTA : Material.PLASTIC;
+		sc.nextLine();
+		floristeriaGestion.afegirDecoracio(nom, preu, material, compra);
+
 	}
 
 	//////////////////////////////////////////////////////
@@ -340,15 +394,4 @@ public class Main {
 	public static void obrirFloristeria(Floristeria floristeria) {
 
 	}
-
-	public static void visualitzarTotalGuanyats() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void mostrarCompres() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -11,7 +11,7 @@ public class Indexacio {
 	private int indexFloristeria;
 	
 	
-	Persistencia persistencia;
+	//Persistencia persistencia;
 	public Indexacio() {
 
 	}
