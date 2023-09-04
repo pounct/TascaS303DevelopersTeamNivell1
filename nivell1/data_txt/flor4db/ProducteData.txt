@@ -1,3 +1,2 @@
-0	arbre1
-1	arbre2
-2	flor1
+4	arbre24
+5	arbre2

@@ -42,7 +42,8 @@ public class FloristeriaGestion {
 	//////
 
 	public FloristeriaGestion() {
-
+		floristeries = entitatsData.getFloristeries();
+		System.out.println(floristeries);
 	}
 
 	public Indexacio getIndexacio() {
@@ -628,10 +629,45 @@ public class FloristeriaGestion {
 
 	public double getTotalVendes() {
 		double totalVendes = 0;
-		for (LiniaCompra liniaCompra:liniesCompres) {
+		for (LiniaCompra liniaCompra : liniesCompres) {
 			totalVendes += liniaCompra.getPreu();
 		}
 		return totalVendes;
+	}
+
+	public Floristeria getFloristeria(int floristeriaId) {
+		Floristeria floristeria = null;
+		int i = 0;
+		int num = floristeries.size();
+		while (floristeria == null && i < num) {
+			int id = floristeries.get(i).getId();
+
+			if (id == floristeriaId) {
+				floristeria = floristeries.get(i);
+			} else {
+				i++;
+			}
+		}
+		return floristeria;
+	}
+
+	public Floristeria obrirFloristeria(Floristeria floristeria) {
+		// Initialtzar Floristeria.
+		this.floristeria = entitatsData.setFloristeria(floristeria);
+		// Initialtzar Indexacio
+		indexacions = entitatsData.getIndexacions();
+		indexacio = indexacions.get(0);
+		//  carregar dades
+		arbres = entitatsData.getArbres();
+		compres= entitatsData.getCompres();
+		decoracions= entitatsData.getDecoracions();
+		flors= entitatsData.getFlors();
+		liniesCompres= entitatsData.getLiniesCompres();
+		liniesVendes= entitatsData.getLiniesVendes();
+		productes= entitatsData.getProductes();
+		vendes= entitatsData.getVendes();
+		System.out.println("Floristeria obert...");
+		return floristeria;
 	}
 
 }

@@ -140,15 +140,7 @@ public class Main {
 				break;
 			case 14:
 				// 14.Obrir Floristeria.
-//				System.out.println(" Introduïu el codi de la floristeria :");
-//				int idFloristeria = sc.nextInt();
-//				sc.nextLine();
-//				Floristeria f = new Floristeria();
-//				f.setId(idFloristeria);	
-//				if (floristeriaGestion.getFloristeries().contains(f)) {
-//					floristeria = f;
-//					obrirFloristeria(floristeria);
-//				}
+				obrirFloristeria();
 				break;
 			case 0:
 				onProgram = false;
@@ -162,7 +154,7 @@ public class Main {
 	}
 
 	public static void menuPrincipal() {
-		System.out.println(" Floristeria : " + ((floristeria != null) ? floristeria.getNom() : ""));
+		System.out.println(" Floristeria actiu : " + ((floristeria != null) ? floristeria.getNom() : ""));
 		System.out.println("-----------------\n");
 		System.out.println(" 1.Crear Floristeria."); // obrir floristeria
 		System.out.println(" 14.Obrir Floristeria.");
@@ -342,10 +334,12 @@ public class Main {
 		sc.nextLine();
 		System.out.println(" Total Compres :");
 		double totalCompres = floristeriaGestion.getTotalCompres();
+		System.out.println(totalCompres);
 		System.out.println(" Total Vendes :");
 		double totalVendes = floristeriaGestion.getTotalVendes();
+		System.out.println(totalVendes);
 		System.out.println(" Total Guanyats :");
-
+		System.out.println(""+(totalVendes-totalCompres-totalDespeses));
 	}
 
 	private static void afegirArbre(Compra compra) {
@@ -391,7 +385,19 @@ public class Main {
 
 	//////////////////////////////////////////////////////
 
-	public static void obrirFloristeria(Floristeria floristeria) {
-
+	public static void obrirFloristeria() {
+		System.out.println("id Floristeria : ");
+		int floristeriaId = sc.nextInt();
+		sc.nextLine();
+		floristeria = floristeriaGestion.getFloristeria(floristeriaId);
+		System.out.println(floristeria);
+		if (floristeria!=null) {
+			floristeria = floristeriaGestion.obrirFloristeria(floristeria);
+			indexacio = floristeriaGestion.getIndexacio();
+		}
+		else {
+			System.out.println(" no hi ha cap florista amb aquest identificador!!!");
+		}
+		
 	}
 }

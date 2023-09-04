@@ -147,11 +147,12 @@ public class EntitatsData {
 		return floristeria;
 	}
 
-	public void setFloristeria(Floristeria floristeria) {
+	public Floristeria setFloristeria(Floristeria floristeria) {
 		// .\\src\\nivell1\\java\\n2exercici1\\treballador.json
 		// /TascaS303DevelopersTeam/src/nivell1/EntitatsData.java
 		pathFloristeriaDB = ".\\src\\nivell1\\data_txt\\" + floristeria.getNom() + "db\\";
 		this.floristeria = floristeria;
+		return this.floristeria;
 	}
 
 //	floristeries Floristeria
